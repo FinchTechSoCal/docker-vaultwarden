@@ -1,0 +1,18 @@
+--- 
+version: '3.7'
+services:
+  vaultwarden:
+    image: ghcr.io/dani-garcia/vaultwarden:latest
+    container_name: vaultwarden
+    env_file: stack.env # used by portainer
+    volumes:
+      - ${LOCVOL1}vaultwarden:/data
+    restart: unless-stopped
+#
+# docker pull ghcr.io/dani-garcia/vaultwarden:latest
+# docker run -d --name vaultwarden -v /vw-data/:/data/ --restart unless-stopped -p 80:80 ghcr.io/dani-garcia/vaultwarden:latest
+#
+networks:
+  default:
+    name: ${CONNET}
+    external: true
