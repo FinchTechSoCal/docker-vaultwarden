@@ -16,7 +16,6 @@ services:
       - ${LOCVOL1}vaultwarden:/data
     restart: unless-stopped
 #
-# docker pull ghcr.io/dani-garcia/vaultwarden:latest
 # docker run -d --name vaultwarden -v /vw-data/:/data/ --restart unless-stopped -p 80:80 ghcr.io/dani-garcia/vaultwarden:latest
 #
   vaultwarden-backup:
@@ -31,15 +30,13 @@ services:
       - TIMESTAMP=${TIMESTAMP}
       - CRON_TIME=${CRON_TIME}
     volumes:
-      - ${LOCVOL1}vaultwarden:/data
+      - ${LOCVOL1}vaultwarden:/data #vaultwarden source data
+      - ${LOCVOL1}vaultwarden/backups:/backup #backup destination
     restart: unless-stopped
     depends_on:
       - vaultwarden
-
 #
 # docker run -d --restart=always --name vaultwarden --volumes-from=vaultwarden -e TIMESTAMP=true -e DELETE_AFTER=30 bruceforce/vaultwarden-backup
-#
-#
 #
 networks:
   default:
