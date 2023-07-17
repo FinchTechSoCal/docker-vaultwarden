@@ -25,12 +25,12 @@ services:
     env_file: stack.env # used by portainer
     environment:
       - TZ=${TZ}
+      - UID=${BACKUP_UID}
+      - GID=${BACKUP_GID}
       - BACKUP_ON_STARTUP=${BACKUP_ON_STARTUP}
       - DELETE_AFTER=${DELETE_AFTER}
       - TIMESTAMP=${TIMESTAMP}
       - CRON_TIME=${CRON_TIME}
-      - UID=0
-      - GID=0
     volumes:
       - ${LOCVOL1}vaultwarden:/data #vaultwarden source data
       - ${LOCVOL1}vaultwarden/backups:/backup #backup destination
