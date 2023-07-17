@@ -29,6 +29,8 @@ services:
       - DELETE_AFTER=${DELETE_AFTER}
       - TIMESTAMP=${TIMESTAMP}
       - CRON_TIME=${CRON_TIME}
+      - UID=0
+      - GID=0
     volumes:
       - ${LOCVOL1}vaultwarden:/data #vaultwarden source data
       - ${LOCVOL1}vaultwarden/backups:/backup #backup destination
