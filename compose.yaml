@@ -1,10 +1,8 @@
 --- 
-version: '3.7'
 services:
   vaultwarden:
     image: ghcr.io/dani-garcia/vaultwarden:latest
     container_name: vaultwarden
-    env_file: stack.env # used by portainer
     environment:
       - TZ=${TZ}
       - SIGNUPS_ALLOWED=${SIGNUPS_ALLOWED}
@@ -13,16 +11,13 @@ services:
       - ORG_EVENTS_ENABLED=${ORG_EVENTS_ENABLED}
       - PASSWORD_ITERATIONS=${PASSWORD_ITERATIONS}
     volumes:
-      - ${LOCVOL1}vaultwarden:/data
+      - ${APPDATA}/vaultwarden:/data
     restart: unless-stopped
-#
-# docker run -d --name vaultwarden -v /vw-data/:/data/ --restart unless-stopped -p 80:80 ghcr.io/dani-garcia/vaultwarden:latest
 #
   vaultwarden-backup:
     image: bruceforce/vaultwarden-backup:latest
     container_name: vaultwarden-backup
     init: true
-    env_file: stack.env # used by portainer
     environment:
       - TZ=${TZ}
       - UID=${BACKUP_UID}
@@ -32,13 +27,13 @@ services:
       - TIMESTAMP=${TIMESTAMP}
       - CRON_TIME=${CRON_TIME}
     volumes:
-      - ${LOCVOL1}vaultwarden:/data #vaultwarden source data
-      - ${LOCVOL1}vaultwarden/backups:/backup #backup destination
+      - ${APPDATA}/vaultwarden:/data #vaultwarden source data
+      - ${APPDATA}/vaultwarden/backups:/backup #backup destination
     restart: unless-stopped
     depends_on:
       - vaultwarden
 #
-# docker run -d --restart=always --name vaultwarden --volumes-from=vaultwarden -e TIMESTAMP=true -e DELETE_AFTER=30 bruceforce/vaultwarden-backup
+#
 #
 networks:
   default:
